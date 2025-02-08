@@ -11,7 +11,7 @@ namespace SnippetManager
     {
         public App()
         {
-            //new Bootstrapper();
+            new Bootstrapper();
         }
 
     }

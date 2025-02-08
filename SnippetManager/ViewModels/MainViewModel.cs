@@ -5,9 +5,10 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using System.Windows.Controls;
+using MahApps.Metro.Controls;
 namespace SnippetManager.ViewModels
 {
-    public class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel : MetroWindow, INotifyPropertyChanged
     {
         private readonly ISnippetManagerService _snippetService;
         private ObservableCollection<Snippet> _snippets;

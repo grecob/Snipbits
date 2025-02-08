@@ -1,10 +1,12 @@
-﻿using System.ComponentModel;
+﻿using ICSharpCode.AvalonEdit.Document;
+using ICSharpCode.AvalonEdit.Highlighting;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 public class Snippet : INotifyPropertyChanged
 {
     private string _title;
-    private string _code;
+    private TextDocument _document;
     private string _language;
     private DateTime _createdDate;
 
@@ -19,10 +21,10 @@ public class Snippet : INotifyPropertyChanged
     /// <summary>
     /// The code content of the snippet
     /// </summary>
-    public string Code
+    public TextDocument Document
     {
-        get => _code;
-        set { _code = value; OnPropertyChanged(); }
+        get => _document;
+        set { _document = value; OnPropertyChanged(); }
     }
     /// <summary>
     /// The code language of the snippet
@@ -30,9 +32,14 @@ public class Snippet : INotifyPropertyChanged
     public string Language
     {
         get => _language;
-        set { _language = value; OnPropertyChanged(); }
+        set { _language = value; OnPropertyChanged(); OnPropertyChanged(nameof(LanguageHighlighting)); Console.WriteLine(HighlightingManager.Instance.GetDefinitionByExtension(Language)); }
     }
 
+    public string Code
+    {
+        get => Document.Text;
+        set => Document = new TextDocument(value);
+    }
     /// <summary>
     /// The date and time the snippet was created
     /// </summary>
@@ -48,4 +55,6 @@ public class Snippet : INotifyPropertyChanged
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
+    public IHighlightingDefinition LanguageHighlighting =>
+    HighlightingManager.Instance.GetDefinition(Language.ToString());
 }
